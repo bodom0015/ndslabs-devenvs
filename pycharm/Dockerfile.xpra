@@ -1,4 +1,4 @@
-FROM ndslabs/xpra-base:latest
+FROM bodom0015/xpra-base:fix-pycharm-2017
 
 RUN yum update -q -y && \
     yum install -q -y \

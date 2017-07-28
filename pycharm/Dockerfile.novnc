@@ -1,4 +1,4 @@
-FROM ndslabs/novnc-base:latest
+FROM bodom0015/novnc-base:fix-pycharm-2017
 
 RUN apt-get -qq update && \
     apt-get -qq install --no-install-recommends \

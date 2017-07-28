@@ -1,7 +1,7 @@
 FROM ubuntu:xenial
 
-RUN apt-get update -y && \
-	apt-get -y install \
+RUN apt-get -qq update && \
+    apt-get -qq install \
 	curl \
 	git \
 	net-tools \
@@ -15,17 +15,20 @@ RUN apt-get update -y && \
 	xfonts-base \
 	x11-utils \
 	x11vnc \
-	xvfb 
+	xvfb && \
+    apt-get -qq clean all && \
+    apt-get -qq autoclean && \
+    apt-get -qq autoremove && \
+    rm -rf /var/lib/apt/lists/* /tmp/*
 
-ENV DISPLAY=:0
-
-RUN cd / && git clone git://github.com/kanaka/noVNC 
+WORKDIR /
+RUN git clone --depth=1 git://github.com/kanaka/noVNC && \
+    rm -rf ./noVNC/.git 
 
 ADD index.html /noVNC/
 ADD init.sh /init.sh
-RUN chmod +x /init.sh
 
 EXPOSE 80
-
+ENV DISPLAY=:0
 CMD ["/init.sh"]
 

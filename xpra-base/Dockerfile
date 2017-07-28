@@ -1,6 +1,5 @@
 FROM centos:7
 
-
 # Base XPRA container for development environments
 # https://xpra.org/trac/wiki/Usage/Docker/CentOS
 # https://www.xpra.org/trac/wiki/Clients/HTML5
@@ -12,18 +11,21 @@ RUN cd /etc/yum.repos.d && \
 RUN yum update -q -y && \
     yum install -q -y epel-release && \
     yum --enablerepo=epel install -q -y \
-    dejavu-sans-fonts \
-	dejavu-sans-mono-fonts \
-    git \
-    python-websockify \
-    vim \
-    wget \
-    which \
-    x11-utils \
-	xfonts-base \
-    xorg-x11-server-Xvfb \
-    xpra 
+        dejavu-sans-fonts \
+        dejavu-sans-mono-fonts \
+        git \
+        python-websockify \
+        vim \
+        wget \
+        which \
+        x11-utils \
+        xfonts-base \
+        xorg-x11-server-Xvfb \
+        xpra && \
+    yum autoremove -q -y && \
+    yum clean all -q -y
 
+WORKDIR /
 COPY index.html /usr/share/xpra/www
 COPY entrypoint.sh /
 VOLUME /root
